@@ -8,9 +8,20 @@
 </head>
 
 <body>
+    <!--
+        INFO PAGE
+        Page sur laquelle les utilisateurs qui viennent de se connecter doivent 
+        choisir l'élève dont ils veulent voir l'historique d'achat. (liste des enfants du compte parent)
+
+        VARIABLES ACCESSIBLES
+        names : List[str] -> liste du nom des élèves associés au compte parent
+
+
+
+    --> 
     <form action="{{ url_for('index') }}" method="POST">
         {% for name in names %}
-            <label for="{{ name }}">{{ name }}</label>
+            <label for="{{ name }}">{{ name.title() }}</label>
             <input type="radio" name="name" id="{{ name }}", value="{{ name }}">
             <br>
         {% endfor %}

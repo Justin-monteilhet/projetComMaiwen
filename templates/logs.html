@@ -8,7 +8,11 @@
 </head>
 
 <body>
-    <!-- VARIABLES ACCESSIBLES
+    <!-- 
+    INFO PAGE
+    Page affichant l'historique des transactions d'un des enfants du compte parent.
+
+    VARIABLES ACCESSIBLES
     logs : List[Transaction]
 
     INFO VARIABLES
@@ -20,7 +24,7 @@
     -->
 
     {% for trans in logs %}
-        <p> {{ trans.date.strftime('%y/%m/%d') }} : {{ "%.2f€" | trans.value }}€ ({{ trans.label }}) </p>
+        <p> {{ trans.date.strftime('%y/%m/%d') }} : {{ "%.2f€" | format(trans.value) }} ({{ trans.label }}) </p>
     {% endfor %}
 </body>
 </html>
