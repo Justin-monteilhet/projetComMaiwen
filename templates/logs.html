@@ -24,7 +24,7 @@
     -->
 
     {% for trans in logs %}
-        <p> {{ trans.date.strftime('%y/%m/%d') }} : {{ "%.2f€" | format(trans.value) }} ({{ trans.label }}) </p>
+        <p> {{ trans.date.strftime('%d/%m/%Y') }} : {{ "%.2f€" | format(trans.value) }} ({{ trans.label }}) </p>
     {% endfor %}
 </body>
 </html>
