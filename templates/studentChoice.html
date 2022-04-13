@@ -25,6 +25,7 @@
             <input type="radio" name="name" id="{{ name }}", value="{{ name }}">
             <br>
         {% endfor %}
+        <input type="text" hidden id="logs" name="logs" value="{{ logs }}"> <!-- IMPORTANT ne pas supp, permet le transfert de données trop importantes pour la session-->
         <input type="submit" value="Accdéder aux logs">
     </form>
 </body>

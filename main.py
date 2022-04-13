@@ -1,3 +1,4 @@
+import json
 import logging
 from datetime import timedelta
 from typing import List
@@ -33,14 +34,12 @@ def index():
         for name, trans_list in sold_logs.items():
             sold_logs[name] = [trans.to_json() for trans in trans_list]
 
-        session['logs'] = sold_logs
-
         logging.info("credentials found, rendering studentChoice")
-        return render_template("studentChoice.html", names=names)
+        return render_template("studentChoice.html", names=names, logs=json.dumps(sold_logs))
     
-    if "name" in form and 'logs' in session:  # if sending the student name, redirect to logs
+    if "name" in form and "logs" in form:  # if sending the student name, redirect to logs
         name = form['name']
-        raw_user_logs : List[dict] = session["logs"].get(name)
+        raw_user_logs : List[dict] = json.loads(form['logs']).get(name)
 
         user_logs = list(map(Transaction.from_dict, raw_user_logs))
         logging.info("name found, rendering logs")
