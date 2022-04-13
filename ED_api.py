@@ -9,6 +9,9 @@ from getpass import getpass
 from ftfy import fix_text
 
 Credentials = namedtuple('Credentials', ['username', 'password'])
+Credentials.__doc__ = "Describes a 2-variable tuple containing a username and a password"
+
+class IncorrectCredentialsError(Exception) : ...
 
 class Transaction:
     def __init__(self, value:int, date:str, label:str) -> None:
@@ -47,6 +50,8 @@ class APISession:
         login_credentials = "data=" + json.dumps({"identifiant" : username, "motdepasse" : password})
         login = rq.post(URL.login, data=login_credentials)
         login_data = login.json()
+        if login_data.get("code") == 505:
+            raise IncorrectCredentialsError(f"Username \"{username}\" and password \"{password}\" do not match.")
 
         return cls(login_data.get("token"))
 
@@ -60,7 +65,7 @@ class APISession:
         for acc in accounts:
             libelle = acc.get("libelle")  # for example PM_RESTO JAMES
             name = libelle[libelle.find(' ')+1:].lower()
-            names.append(name)
+            names.append(fix_text(name))
             
         return names
 
@@ -74,7 +79,7 @@ class APISession:
         for acc in accounts:
             sold = acc['solde']
             libelle = acc.get("libelle")  # for example PM_RESTO JAMES
-            name = libelle[libelle.find(' ')+1:].lower()
+            name = fix_text(libelle[libelle.find(' ')+1:].lower())
             solds[name] = sold
             
         return solds
@@ -87,7 +92,7 @@ class APISession:
         all_transactions = {}   # student name -> List of his transactions json formatted
         for account in accounts:
             libelle = account.get("libelle") 
-            name = libelle[libelle.find(' ')+1:].lower()
+            name = fix_text(libelle[libelle.find(' ')+1:].lower())
             transactions = []
 
             for trans in account['ecritures']:

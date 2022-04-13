@@ -4,7 +4,7 @@ from typing import List
 
 from flask import Flask, render_template, request, session
 
-from ED_api import APISession, Transaction
+from ED_api import APISession, Transaction, IncorrectCredentialsError
 
 app = Flask(__name__)
 app.secret_key = "clé-très-secrète"
@@ -22,7 +22,12 @@ def index():
 
     if "username" in form and "password" in form:   # if sending a login request, login and redirects to choiceStudent
         username, password = form['username'], form['password']
-        api = APISession.from_credentials(username, password)
+        try : 
+            api = APISession.from_credentials(username, password)
+
+        except IncorrectCredentialsError :
+            return render_template("login.html", code=401)
+
         sold_logs = api.sold_logs
         names = list(sold_logs.keys())  # key of sold logs are the students' names
         for name, trans_list in sold_logs.items():
@@ -42,6 +47,6 @@ def index():
         return render_template('logs.html', logs=user_logs)
 
     logging.info("No data in form/session, rendering default login")
-    return render_template("login.html")    # default
+    return render_template("login.html", code=200)    # default
 
 app.run()

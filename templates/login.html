@@ -14,10 +14,16 @@
     Page de connexion au compte parent
     
     VARIABLES ACCESSIBLES
-    Aucune. 
+    code : int -> code indiquant la raison de l'accès à la page
+        200 : connexion classique
+        401 : retour au login car mauvais identifiants
 
     --> 
     <form action="{{ url_for('index') }}" method="POST">
+        {% if code == 401%}
+            <p style="color:'red';">Identifiants ou mot de passe incorrect.</p>
+        {% endif %}
+        
         <label for="username">Identifiant : </label>
         <input type="text" name="username" id="username">
         <br>
