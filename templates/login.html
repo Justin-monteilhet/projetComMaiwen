@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facile Cafet'</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles/login.css')}}">
+
+</head>
+
+<body>
+
+    <!--
+    INFO PAGE
+    Page de connexion au compte parent
+    
+    VARIABLES ACCESSIBLES
+    code : int -> code indiquant la raison de l'accès à la page
+        200 : connexion classique
+        401 : retour au login car mauvais identifiants
+
+    --> 
+
+    
+    <div id="login-button">
+      <img src="https://dqcgrsy5v35b9.cloudfront.net/cruiseplanner/assets/img/icons/login-w-icon.png">
+  </div>
+  <div id="container">
+    <h1>Facile Cafet'</h1>
+    <span class="close-btn">
+        <img src="https://cdn4.iconfinder.com/data/icons/miu/22/circle_close_delete_-128.png"></img>
+    </span>
+    <form action="{{ url_for('index') }}" method="POST">
+        {% if code == 401%}
+        <p style="color:'red';">Identifiant ou mot de passe incorrect.</p>
+        {% endif %}
+
+        <input type="text" name="username" id="username" placeholder="Identifiant">
+        <input type="password" name="password" id="password" placeholder="Mot de passe">
+        <input type="submit" value="Connexion">
+    </form>
+</div>
+
+<script>
+    document.querySelector('#login-button').addEventListener("click",function(){
+        document.querySelector('#login-button').style.transform="scale(0)"
+        setTimeout(() => {  document.querySelector('#container').style.transform="scale(1)" }, 1000);
+    });
+
+    document.querySelector('.close-btn').addEventListener("click",function(){
+        document.querySelector('#container').style.transform="scale(0)"
+        setTimeout(() => {  document.querySelector('#login-button').style.transform="scale(1)" }, 1000);
+    });
+
+
+</script>
+</body>
+</html>
+

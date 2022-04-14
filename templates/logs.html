@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet'Com</title>
+</head>
+
+<body>
+    <!-- 
+    INFO PAGE
+    Page affichant l'historique des transactions d'un des enfants du compte parent.
+
+    VARIABLES ACCESSIBLES
+    logs : List[Transaction]
+
+    INFO VARIABLES
+
+    Les objets de type Transaction possèdent les attributs suivants :
+        value : int -> la valeur en € (positive ou négative) de la transaction
+        date : datetime.datetime -> date de la transaction, formatable via trans.date.strftime()
+        label : str -> objet de la transaction
+    -->
+
+    {% for trans in logs %}
+        <p> {{ trans.date.strftime('%d/%m/%Y') }} : {{ "%.2f€" | format(trans.value) }} ({{ trans.label }}) </p>
+    {% endfor %}
+</body>
+</html>

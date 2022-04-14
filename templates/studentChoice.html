@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles/studentChoice.css')}}">
+    <title>Facile Cafet'</title>
+</head>
+
+<body>
+    <!--
+        INFO PAGE
+        Page sur laquelle les utilisateurs qui viennent de se connecter doivent 
+        choisir l'élève dont ils veulent voir l'historique d'achat. (liste des enfants du compte parent)
+
+        VARIABLES ACCESSIBLES
+        names : List[str] -> liste du nom des élèves associés au compte parent
+
+
+
+    --> 
+    <div id="container">
+        <h1>Choix du compte</h1>
+        <form action="{{ url_for('index') }}" method="POST">
+            <ul>
+                {% for name in names %}
+                <li>
+                    <input type="radio" name="name" id="{{ name }}", value="{{ name }}">
+                    <label for="{{ name }}">{{ name.title() }}</label>
+                </li>
+                {% endfor %}
+            </ul>
+            
+            <input type="text" hidden id="logs" name="logs" value="{{ logs }}"> <!-- IMPORTANT ne pas supp, permet le transfert de données trop importantes pour la session-->
+            <input type="submit" value="Accdéder aux logs">
+        </form>
+    </div>
+    
+</body>
+</html>
